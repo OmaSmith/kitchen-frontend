@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Kitchen } from '../models/kitchen.model';
 import { HttpClient } from '@angular/common/http';
 import { MenuItems } from '../models/kitchen_menu.model';
 
