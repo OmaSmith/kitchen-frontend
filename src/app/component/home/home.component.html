@@ -1,1 +1,43 @@
-<p>home works!</p>
+<div class="container mt-5" *ngIf="!authService.getIsLoggedIn(); else loginHome">
+  <p class="row mb-4 h5">
+    Welcome to FeastFreedom - Your Gateway to Homemade Delicacies!
+  </p>
+  <p class="row mb-2">
+    Are you craving the authentic flavors of homemade meals but don't have the time or skills to prepare them yourself?
+    Look no further! FeastFreedom is here to connect you with talented homemade food service providers in your area.
+  </p>
+  <p class="row mb-2">
+    In response to the growing demand for homemade food, especially within South Asian communities in the tri-state
+    area,
+    we've developed a user-friendly platform that bridges the gap between consumers and homemade food enthusiasts.
+  </p>
+  <p class="row mb-2">
+    Our web-based application offers a seamless and responsive design, ensuring a smooth experience across all devices.
+    Whether you're in the mood for traditional curries, aromatic biryanis, or mouthwatering desserts, FeastFreedom has
+    got you covered.
+  </p>
+  <p class="row mb-2">
+    And the best part? No hassle with payment processing! Simply place your order, and we'll handle the rest. Upon
+    successful placement of your order, both you and the service provider will receive confirmation emails, ensuring a
+    smooth and transparent transaction process.
+  </p>
+  <p class="row">
+    Join us in celebrating the joy of homemade cooking. Explore our platform today and discover a world of homemade
+    delicacies waiting to tantalize your taste buds!
+  </p>
+</div>
+
+<ng-template #loginHome>
+  <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let kitchen of data.getMockData()">
+      <mat-card (click)="onMenu(kitchen.id)">
+        <mat-card-header>
+          {{ kitchen.name }}
+        </mat-card-header>
+        <mat-card-content>
+<!--        <img />-->
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-template>

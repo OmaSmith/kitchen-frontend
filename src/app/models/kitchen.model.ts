@@ -8,8 +8,8 @@ export interface Kitchen {
   password: string,
   confirm_password: string,
   workingDays: string[],
-  start_time: Time,
-  end_time: Time,
+  start_time: string,
+  end_time: string,
   menuItems: MenuItems[],
   createdAt: Date,
   updatedAt: Date

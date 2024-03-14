@@ -8,9 +8,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { HomeComponent } from './component/home/home.component';
 import { RegisterModalComponent } from './component/register-modal/register-modal.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LoginModalComponent } from './component/login-modal/login-modal.component';
 import { UserRegisterModalComponent } from './component/user-register-modal/user-register-modal.component';
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {MatDivider} from "@angular/material/divider";
+import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -27,9 +31,20 @@ import { UserRegisterModalComponent } from './component/user-register-modal/user
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDivider,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatGridList,
+    MatGridTile
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
     provideAnimationsAsync()
   ],
   bootstrap: [AppComponent],

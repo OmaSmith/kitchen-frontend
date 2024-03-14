@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class KitchenService {
   kitchen: Kitchen;
   kitchens: Kitchen[] = [];
+  kitchenId: number
 
   api = "http://localhost:8080/kitchens"
   constructor( private http:HttpClient ) { }
@@ -29,5 +30,13 @@ export class KitchenService {
 
   setKitchen(kitchen: Kitchen) {
     this.kitchen = kitchen
+  }
+
+  getKitchenId(): number {
+    return this.kitchenId;
+  }
+
+  setKitchenId(kitchenId: number): void {
+    this.kitchenId = kitchenId;
   }
 }

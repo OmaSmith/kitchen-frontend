@@ -18,7 +18,7 @@ import { MenuService } from '../../services/menu.service';
 export class RegisterModalComponent implements OnInit {
 
   //---- VARIABLES AND CONSTRUCTORS ---------------------------------||
-  
+
   kitchen_info: KitchenForm = {
     name: '',
     email: '',
@@ -46,14 +46,14 @@ export class RegisterModalComponent implements OnInit {
     confirm_pass: ['', [Validators.required]]
   });
   kitchenForm = this.formBuilder.group({
-    working_days: this.formBuilder.array<String>([], [Validators.required]), 
+    working_days: this.formBuilder.array<String>([], [Validators.required]),
     start_time: [''],
     end_time: [''],
     kitchen_menu: this.formBuilder.array([this.createItem()])
   })
   constructor(
-    public dialogRef: MatDialogRef<RegisterModalComponent>, 
-    private formBuilder: FormBuilder, 
+    public dialogRef: MatDialogRef<RegisterModalComponent>,
+    private formBuilder: FormBuilder,
     private kitchenServ: KitchenService,
     private menuServ: MenuService
   ) {}
@@ -63,7 +63,7 @@ export class RegisterModalComponent implements OnInit {
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
-  /* 
+  /*
     saves kitchen information into kitchen_info.
     saves the kitchen to the database, while also
     saving the menu to the database, linked with
@@ -76,9 +76,10 @@ export class RegisterModalComponent implements OnInit {
       password: this.registerForm.get('password').value,
       confirm_password: this.registerForm.get('confirm_pass').value,
       workingDays: this.kitchenForm.get('working_days').value,
-      start_time: this.kitchenForm.get('start_time').value,
-      end_time: this.kitchenForm.get('end_time').value
+      start_time: `${this.kitchenForm.get('start_time').value}:00`,
+      end_time: `${this.kitchenForm.get('end_time').value}:00`
     }
+    console.log(this.kitchen_info)
     this.kitchenServ.saveKitchen(this.kitchen_info).subscribe((kitchen: Kitchen) => {
       this.kitchenServ.setKitchen(kitchen);
       this.kitchenForm.controls['kitchen_menu'].value.map(
@@ -93,12 +94,12 @@ export class RegisterModalComponent implements OnInit {
         }
       )
     })
-    
+
   }
   // adds checkbox values to "working_days" array
   onCheckChange(e, day_val: string): void {
     const formArray: FormArray = this.kitchenForm.get('working_days') as FormArray;
-    
+
     if(e.checked){
       formArray.push(new FormControl(day_val));
       console.log(formArray)

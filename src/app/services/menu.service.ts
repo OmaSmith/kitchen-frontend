@@ -7,10 +7,10 @@ import { MenuItems } from '../models/kitchen_menu.model';
 })
 export class MenuService {
 
-  api = "http://localhost:8080/menus"
+  api: string = "http://localhost:8080/menus"
   constructor( private http:HttpClient ) { }
 
   saveMenu(menu: MenuItems) {
-    return this.http.post<MenuItems>(this.api, menu)
+    return this.http.post<void>(this.api, menu)
   }
 }

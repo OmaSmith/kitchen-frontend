@@ -1,94 +1,97 @@
 <h1 mat-dialog-title>Register Service Provider</h1>
 <div mat-dialog-content>
   <mat-horizontal-stepper linear>
-    <mat-step [stepControl] = "registerForm">
+    <mat-step [stepControl]="registerForm">
       <ng-template matStepLabel>User Info</ng-template>
-      <form [formGroup] = "registerForm">  
+      <form [formGroup]="registerForm">
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Service Provider Name</mat-label>
-            <input matInput formControlName = "name" name = "name"/>
+            <input matInput formControlName="name" name="name"/>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Service Provider Email</mat-label>
-            <input matInput formControlName = "email" name = "email"/>
+            <input matInput formControlName="email" name="email"/>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput formControlName = "password" name = "password" type = "password"/>
-            <mat-error *ngIf = "registerForm.value.password">Passwords must be more than 3 characters.</mat-error>
+            <input matInput formControlName="password" name="password" type="password"/>
+            <mat-error *ngIf="registerForm.value.password">Passwords must be more than 3 characters.</mat-error>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
-            <input matInput formControlName = "confirm_pass" name = "confirm_pass" type = "password" placeholder="Confirm Password"/>
-            <mat-error *ngIf = "registerForm.value.confirm_pass">Password do not match.</mat-error>
+            <input matInput formControlName="confirm_pass" name="confirm_pass" type="password"
+                   placeholder="Confirm Password"/>
+            <mat-error *ngIf="registerForm.value.confirm_pass">Password do not match.</mat-error>
           </mat-form-field>
         </div>
         <mat-dialog-actions>
-          <button style = "margin-right:20px" mat-raised-button mat-dialog-close>Close</button>
-          <button mat-raised-button matStepperNext [disabled] = "!registerForm.valid">Next</button>
+          <button style="margin-right:20px" mat-raised-button mat-dialog-close>Close</button>
+          <button mat-raised-button matStepperNext [disabled]="!registerForm.valid">Next</button>
         </mat-dialog-actions>
       </form>
     </mat-step>
 
-    <mat-step [stepControl] = "kitchenForm">
-      <form [formGroup] = "kitchenForm">
+    <mat-step [stepControl]="kitchenForm">
+      <form [formGroup]="kitchenForm">
         <ng-template matStepLabel>Kitchen Info</ng-template>
         <mat-label>Kitchen Working Days</mat-label>
-        <div *ngFor = "let day of days; let i = index" class="col-md-2">
-          <mat-checkbox (change) = "onCheckChange($event, day.value)">{{day.name}}</mat-checkbox>
+        <div *ngFor="let day of days; let i = index" class="col-md-2">
+          <mat-checkbox (change)="onCheckChange($event, day.value)">{{ day.name }}</mat-checkbox>
         </div>
-        <mat-divider></mat-divider>
-        <div>
+        <mat-divider class="mt-2 mb-2"></mat-divider>
+        <div class="mb-5">
           <mat-label>Kitchen Start Time</mat-label>
-          <ngx-timepicker-field [format] = "12" [controlOnly] = "true" formControlName = "start_time"></ngx-timepicker-field>
+          <ngx-timepicker-field [format]="24" formControlName="start_time"></ngx-timepicker-field>
         </div>
-        <div>
+        <div class="mb-2">
           <mat-label>Kitchen End Time</mat-label>
-          <ngx-timepicker-field [format] = "12" [controlOnly] = "true" formControlName = "end_time"></ngx-timepicker-field>
+          <ngx-timepicker-field [format]="24" formControlName="end_time"></ngx-timepicker-field>
         </div>
-        <mat-divider></mat-divider>
+
         <div>
-          <mat-label>// Kitchen Menu Items //</mat-label>
-          <button mat-icon-button (click) = "addNext()">
+          <mat-label>Kitchen Menu Items</mat-label>
+          <button mat-icon-button (click)="addNext()">
             <mat-icon>add_box</mat-icon>
-          </button> 
+          </button>
         </div>
-        <div formArrayName = "kitchen_menu" *ngFor = "let item of kitchenForm.controls['kitchen_menu'].controls; let i = index">
-          <div [formGroupName] = "i">
+        <div formArrayName="kitchen_menu"
+             *ngFor="let item of kitchenForm.controls['kitchen_menu'].controls; let i = index">
+          <div [formGroupName]="i">
             <div>
-              <button mat-icon-button (click) = "deleteGroup(i)">
+              <mat-form-field appearance="outline">
+                <mat-label >Menu Item</mat-label>
+                <input matInput formControlName="item_name" name="item_name"/>
+              </mat-form-field>
+              <button mat-icon-button (click)="deleteGroup(i)">
                 <mat-icon>cancel</mat-icon>
               </button>
-              <mat-form-field appearance="outline">
-                <mat-label>Menu Item</mat-label>
-                <input matInput formControlName = "item_name" name = "item_name"/>
-              </mat-form-field>
             </div>
             <div>
               <mat-form-field appearance="outline">
                 <mat-label>Menu Type</mat-label>
-                <input matInput formControlName = "item_type" name = "item_type"/>
+                <input matInput formControlName="item_type" name="item_type"/>
               </mat-form-field>
             </div>
             <div>
               <mat-form-field appearance="outline">
                 <mat-label>Menu Price</mat-label>
-                <input matInput formControlName = "item_price" name = "item_price"/>
+                <input matInput formControlName="item_price" name="item_price"/>
               </mat-form-field>
             </div>
-            <mat-divider></mat-divider>
           </div>
         </div>
+        <mat-divider class="mt-2 mb-2"></mat-divider>
         <mat-dialog-actions>
-          <button mat-raised-button style = "margin-right:20px" matStepperPrevious>Back</button>
-          <button mat-raised-button (click) = "onSubmit()" [disabled] = "!kitchenForm.valid" mat-dialog-close>Submit</button>
+          <button mat-raised-button style="margin-right:20px" matStepperPrevious>Back</button>
+          <button mat-raised-button (click)="onSubmit()" [disabled]="!kitchenForm.valid" mat-dialog-close>Submit
+          </button>
         </mat-dialog-actions>
       </form>
     </mat-step>

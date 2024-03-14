@@ -4,6 +4,7 @@ import { RegisterModalComponent } from '../register-modal/register-modal.compone
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { UserRegisterModalComponent } from '../user-register-modal/user-register-modal.component';
 import {AuthService} from "../../services/auth.service";
+import {JwtService} from "../../services/jwt.service";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,7 @@ import {AuthService} from "../../services/auth.service";
 })
 export class NavbarComponent {
 
-  constructor(public dialog: MatDialog, public authService: AuthService) {}
+  constructor(public dialog: MatDialog, public authService: AuthService, private jwtService: JwtService) {}
   openKitchenRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterModalComponent, {
       width: '500px',
@@ -30,5 +31,11 @@ export class NavbarComponent {
       width: '500px',
       height: '600px'
     })
+  }
+
+  onLogout(): void {
+    this.jwtService.destroyToken();
+    this.authService.setIsLoggedIn(false);
+    this.authService.setUsername('');
   }
 }
