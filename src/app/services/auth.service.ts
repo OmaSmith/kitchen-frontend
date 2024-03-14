@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
   registerUrl: string = "http://localhost:8080/register"
   loginUrl: string = "http://localhost:8080/login"
+  isLoggedIn: boolean = false;
+  username: string = 'test';
 
   constructor( private http:HttpClient ) { }
 
@@ -20,7 +21,23 @@ export class AuthService {
     return this.http.post<User>(this.loginUrl, userCred)
   }
   logout(): void {
-    localStorage.removeItem('loggedInUser');
+    localStorage.clear();
+  }
+
+  getIsLoggedIn(): boolean {
+    return this.isLoggedIn;
+  }
+
+  setIsLoggedIn(isLoggedIn: boolean): void {
+    this.isLoggedIn = isLoggedIn;
+  }
+
+  getUsername(): string {
+    return this.username;
+  }
+
+  setUsername(username: string): void {
+    this.username = username;
   }
 
 }

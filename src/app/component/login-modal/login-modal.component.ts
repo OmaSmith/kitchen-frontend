@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {AuthResponse} from "../../models/auth.model";
 
 @Component({
   selector: 'app-login-modal',
@@ -9,10 +10,11 @@ import { Router } from '@angular/router';
   styleUrl: './login-modal.component.css'
 })
 export class LoginModalComponent {
-  
+
   loginForm: FormGroup
-  
-  constructor(private formBuilder: FormBuilder, public auth: AuthService, private router: Router) {}
+
+  constructor(private formBuilder: FormBuilder, public auth: AuthService, private router: Router) {
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -20,15 +22,15 @@ export class LoginModalComponent {
       password: ['']
     })
   }
+
   onSubmit(): void {
-    this.auth.postLoginUser({email: this.loginForm.get('email').value, password: this.loginForm.get('password').value}).subscribe({
-      next: data => {
-        console.log(data);
-        // reroute to login page if successful?
-      },
-      error: err => {
-        console.log(err); 
-      }
+    this.auth.postLoginUser({
+      email: this.loginForm.get('email').value,
+      password: this.loginForm.get('password').value
+    }).subscribe((authResponse: AuthResponse) => {
+      localStorage.setItem('token', authResponse.token);
+      this.auth.setIsLoggedIn(true);
+      this.auth.setUsername(authResponse.username);
     })
   }
 }

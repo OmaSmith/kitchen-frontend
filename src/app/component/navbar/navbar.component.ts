@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { UserRegisterModalComponent } from '../user-register-modal/user-register-modal.component';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +11,8 @@ import { UserRegisterModalComponent } from '../user-register-modal/user-register
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  
-  constructor(public dialog: MatDialog) {}
+
+  constructor(public dialog: MatDialog, public authService: AuthService) {}
   openKitchenRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterModalComponent, {
       width: '500px',
