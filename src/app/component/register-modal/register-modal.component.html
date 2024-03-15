@@ -26,9 +26,8 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
-            <input matInput formControlName="confirm_pass" name="confirm_pass" type="password"
-                   placeholder="Confirm Password"/>
-            <mat-error *ngIf="registerForm.value.confirm_pass">Password do not match.</mat-error>
+            <input matInput formControlName="confirm_password" name="confirm_password" type="password"/>
+            <mat-error *ngIf="registerForm.value.confirm_password">Password do not match.</mat-error>
           </mat-form-field>
         </div>
         <mat-dialog-actions>
@@ -46,6 +45,13 @@
           <mat-checkbox (change)="onCheckChange($event, day.value)">{{ day.name }}</mat-checkbox>
         </div>
         <mat-divider class="mt-2 mb-2"></mat-divider>
+        <!-- Image upload -->
+        <div>
+          <mat-label>Kitchen Image</mat-label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+        <mat-divider class="mt-2 mb-2"></mat-divider>
+
         <div class="mb-5">
           <mat-label>Kitchen Start Time</mat-label>
           <ngx-timepicker-field [format]="24" formControlName="start_time"></ngx-timepicker-field>
@@ -66,7 +72,7 @@
           <div [formGroupName]="i">
             <div>
               <mat-form-field appearance="outline">
-                <mat-label >Menu Item</mat-label>
+                <mat-label>Menu Item</mat-label>
                 <input matInput formControlName="item_name" name="item_name"/>
               </mat-form-field>
               <button mat-icon-button (click)="deleteGroup(i)">
@@ -75,9 +81,13 @@
             </div>
             <div>
               <mat-form-field appearance="outline">
-                <mat-label>Menu Type</mat-label>
-                <input matInput formControlName="item_type" name="item_type"/>
-              </mat-form-field>
+              <mat-label>Menu Type</mat-label>
+              <mat-select placeholder="Select Menu Type" formControlName = "item_type" name="item_type">
+                <mat-option *ngFor="let food_type of types" [value]="food_type.value">
+                  {{ food_type.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             </div>
             <div>
               <mat-form-field appearance="outline">

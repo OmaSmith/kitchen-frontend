@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,16 @@ import { Observable } from 'rxjs';
 export class AuthService {
   registerUrl: string = "http://localhost:8080/register"
   loginUrl: string = "http://localhost:8080/login"
-  isLoggedIn: boolean = false;
+  private isLoggedInSubject: Subject<boolean> = new Subject<boolean>();
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
   username: string = 'test';
 
-  constructor( private http:HttpClient ) { }
+  constructor( private http:HttpClient ) {
+    this.isLoggedInSubject.next(false);
+  }
 
-  postRegisterUser(user: User):Observable<any> {
-    return this.http.post<User>(this.registerUrl, user)
+  postRegisterUser(user):Observable<any> {
+    return this.http.post<void>(this.registerUrl, user)
   }
   postLoginUser(userCred: { email: string; password: string }): Observable<any> {
     return this.http.post<User>(this.loginUrl, userCred)
@@ -24,12 +27,8 @@ export class AuthService {
     localStorage.clear();
   }
 
-  getIsLoggedIn(): boolean {
-    return this.isLoggedIn;
-  }
-
   setIsLoggedIn(isLoggedIn: boolean): void {
-    this.isLoggedIn = isLoggedIn;
+    this.isLoggedInSubject.next(isLoggedIn);
   }
 
   getUsername(): string {

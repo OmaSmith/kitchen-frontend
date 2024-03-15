@@ -5,6 +5,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { UserRegisterModalComponent } from '../user-register-modal/user-register-modal.component';
 import {AuthService} from "../../services/auth.service";
 import {JwtService} from "../../services/jwt.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ import {JwtService} from "../../services/jwt.service";
 })
 export class NavbarComponent {
 
-  constructor(public dialog: MatDialog, public authService: AuthService, private jwtService: JwtService) {}
+  constructor(public dialog: MatDialog, private router: Router, public authService: AuthService, private jwtService: JwtService) {}
   openKitchenRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterModalComponent, {
       width: '500px',
@@ -37,5 +38,10 @@ export class NavbarComponent {
     this.jwtService.destroyToken();
     this.authService.setIsLoggedIn(false);
     this.authService.setUsername('');
+    this.router.navigate(['/'])
+  }
+
+  onCart(): void {
+    this.router.navigate(['/cart'])
   }
 }

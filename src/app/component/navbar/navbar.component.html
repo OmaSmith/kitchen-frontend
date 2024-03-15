@@ -8,17 +8,18 @@
       <button mat-menu-item (click)="openLoginDialog()">Login</button>
     </mat-menu>
 
-    <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!authService.getIsLoggedIn(); else loginMenu">
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!(authService.isLoggedIn$ | async); else loginMenu">
       <mat-icon>menu</mat-icon>
     </button>
     <ng-template #loginMenu>
-      <mat-menu #loginMenuItem="matMenu">
-        <button mat-menu-item (click)="onLogout()">Logout</button>
-      </mat-menu>
-      <span>{{authService.getUsername()}}</span>
+      <mat-icon matBadge="15" matBadgeColor="warn" (click)="onCart()">shopping_cart</mat-icon>
+      <span style="margin-left: 16px;">{{authService.getUsername()}}</span>
       <button mat-icon-button [matMenuTriggerFor]="loginMenuItem">
         <mat-icon>account_circle</mat-icon>
       </button>
+      <mat-menu #loginMenuItem="matMenu">
+        <button mat-menu-item (click)="onLogout()">Logout</button>
+      </mat-menu>
     </ng-template>
   </mat-toolbar>
 </div>

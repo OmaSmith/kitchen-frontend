@@ -15,6 +15,20 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {MatDivider} from "@angular/material/divider";
 import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {NgOptimizedImage} from "@angular/common";
+import { MenuDisplayComponent } from './component/menu-display/menu-display.component';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {MatBadge} from "@angular/material/badge";
+import { CartComponent } from './component/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +37,9 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     HomeComponent,
     RegisterModalComponent,
     LoginModalComponent,
-    UserRegisterModalComponent
+    UserRegisterModalComponent,
+    MenuDisplayComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +53,21 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     MatCardHeader,
     MatCardContent,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    MatSelect,
+    MatOption,
+    NgOptimizedImage,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatBadge
   ],
   providers: [
     {

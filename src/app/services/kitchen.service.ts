@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Kitchen } from '../models/kitchen.model';
 import { KitchenForm } from '../models/kitchen_form.model';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,12 @@ export class KitchenService {
   kitchen: Kitchen;
   kitchens: Kitchen[] = [];
   kitchenId: number
+  api: string = "http://localhost:8080/kitchens"
 
-  api = "http://localhost:8080/kitchens"
   constructor( private http:HttpClient ) { }
 
-  saveKitchen(kitchen: KitchenForm) {
+
+  saveKitchen(kitchen) {
     return this.http.post<Kitchen>(this.api, kitchen)
   }
 
@@ -23,9 +24,9 @@ export class KitchenService {
     return this.http.get<Kitchen[]>(this.api)
   }
 
-  getKitchen(id: number) {
+  getKitchen(id: number): Observable<Kitchen> {
     const api_url = `${this.api}/${id}`
-    return this.http.get<Kitchen[]>(api_url)
+    return this.http.get<Kitchen>(api_url)
   }
 
   setKitchen(kitchen: Kitchen) {
@@ -38,5 +39,12 @@ export class KitchenService {
 
   setKitchenId(kitchenId: number): void {
     this.kitchenId = kitchenId;
+  }
+
+  getImageUrl(kitchen: Kitchen): Observable<string> {
+    const api_url: string = `${this.api}/${kitchen.id}/image`
+    return this.http.get(api_url, {responseType: 'blob'}).pipe(
+      map((data: Blob) => URL.createObjectURL(data))
+    )
   }
 }

@@ -1,4 +1,4 @@
-<div class="container mt-5" *ngIf="!authService.getIsLoggedIn(); else loginHome">
+<div class="container mt-5" *ngIf="!(authService.isLoggedIn$ | async); else loginHome">
   <p class="row mb-4 h5">
     Welcome to FeastFreedom - Your Gateway to Homemade Delicacies!
   </p>
@@ -29,13 +29,13 @@
 
 <ng-template #loginHome>
   <mat-grid-list cols="4" rowHeight="2:1">
-    <mat-grid-tile *ngFor="let kitchen of data.getMockData()">
+    <mat-grid-tile *ngFor="let kitchen of kitchens">
       <mat-card (click)="onMenu(kitchen.id)">
-        <mat-card-header>
+        <mat-card-header class="mat-subtitle-1">
           {{ kitchen.name }}
         </mat-card-header>
         <mat-card-content>
-<!--        <img />-->
+          <img [src]="kitchen.imageUrl" alt="Kitchen Image">
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
